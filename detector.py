@@ -39,3 +39,26 @@ for src_ip, dst_ports in port_scan_dict.items():
 for src_ip, freq in port_freq_dict.items():
     if freq > 10:  # arbitrary threshold for port scanning
         print(f"Potential port scan detected from {src_ip} to {freq} unique destination Ports.")
+
+
+# Basic cleartext credentials detection for HTTP, FTP, and Telnet endpoints
+
+#raw payload
+for packet in pc:
+    if packet.haslayer(TCP) and packet.haslayer(IP):
+        payload = bytes(packet[TCP].payload)
+        if b'Authorization: Basic' in payload:
+            print(f"Potential cleartext credentials detected in HTTP from {packet[IP].src} to {packet[IP].dst}")
+
+
+# ARP spoofing detection proof of concept
+# looking for one IP associated with 2 or more MAC addresses
+arp_dict = defaultdict(set)
+for packet in pc:
+    if packet.hasLayer(ARP):
+        arp_dict[packet[ARP].psrc].add(packet[ARP].hwsrc) #psrc refers to IP, hwsrc refers to MAC address
+
+# Check for ARP spoofing
+for ip, macs in arp_dict.items():
+    if len(macs) > 1:
+        print(f"Potential ARP spoofing detected for IP {ip} with MAC addresses: {macs}")
