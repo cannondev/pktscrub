@@ -41,7 +41,7 @@ for src_ip, freq in port_freq_dict.items():
         print(f"Potential port scan detected from {src_ip} to {freq} unique destination Ports.")
 
 
-# Basic cleartext credentials detection for HTTP, FTP, and Telnet endpoints
+# Basic cleartext credentials detection for HTTP requests
 
 #raw payload
 for packet in pc:
