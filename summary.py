@@ -1,5 +1,6 @@
 # summary.py 
-# by Thomas Clark 06/29/2026
+# This file is part of the pcktscrub project
+# by cannondev 06/29/2026
 
 import sys
 

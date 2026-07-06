@@ -1,5 +1,6 @@
 # detector.py
-# by Thomas Clark 06/29/2026
+# This file is part of the pcktscrub project
+# by cannondev 07/01/2026
 
 import sys
 
@@ -55,7 +56,7 @@ for packet in pc:
 # looking for one IP associated with 2 or more MAC addresses
 arp_dict = defaultdict(set)
 for packet in pc:
-    if packet.hasLayer(ARP):
+    if packet.haslayer(ARP):
         arp_dict[packet[ARP].psrc].add(packet[ARP].hwsrc) #psrc refers to IP, hwsrc refers to MAC address
 
 # Check for ARP spoofing
